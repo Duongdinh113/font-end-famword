@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <title>responsive bootstrap</title>
+</head>
+<style>
+    .red {
+        background-color: red;
+    }
+    
+    .green {
+        background-color: green;
+    }
+    
+    .fuchsia {
+        background-color: fuchsia;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <!-- để sử dụng grid trong bootstrap bắt buộc nội dung để trong bootstrap là row -->
+        <!-- row dùng để nhóm các thành phần thành 1 hàng -->
+        <div class="row mt-3 ">
+            <div class="col red">
+                Column 1
+            </div>
+            <div class="col green">
+                Column 2
+            </div>
+            <div class="col fuchsia">
+                Column 3
+            </div>
+        </div>
+        <!-- Tùy chỉnh độ rộng các cột -->
+        <!-- thêm hậu tố là các số từ 1 đên 12 -->
+        <div class="row mt-3 ">
+            <div class="col-2 red">
+                Column 1
+            </div>
+            <div class="col-5 green">
+                Column 2
+            </div>
+            <div class="col-5 fuchsia">
+                Column 3
+            </div>
+            <!-- chú ý: tổng các hậu tố bắt buộc phải  bằng 12 -->
+        </div>
+        <div class="row mt-3 ">
+            <div class=" col-sm-6  col-lg-3 red">
+                Column 1
+            </div>
+            <div class=" col-sm-6  col-lg-3 green">
+                Column 2
+            </div>
+            <div class=" col-sm-6  col-lg-3 fuchsia">
+                Column 3
+            </div>
+            <div class=" col-sm-6  col-lg-3 bg-black">
+                Column 4
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

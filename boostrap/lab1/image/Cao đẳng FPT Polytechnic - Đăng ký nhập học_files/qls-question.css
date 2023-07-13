@@ -1,0 +1,281 @@
+@font-face {
+    font-family: 'SFCompactDisplay Black';
+    src: url(SF-Compact-Display-Black.otf);
+}
+@font-face {
+    font-family: 'SFCompactDisplay Bold';
+    src: url(SF-Compact-Display-Bold.otf);
+}
+.rwmb-input-list.collapse {
+    display: inline-block;
+}
+.rwmb-input-list.collapse li label {
+    display: inline-block;
+    line-height: 30px;
+}
+.rwmb-input-list.collapse li input {
+    margin: -3px 10px 0 0;
+}
+.question-list {
+    background: url(https://caodang.fpt.edu.vn/wp-content/uploads/BackgroundForm_1920x1080.png) no-repeat;
+    background-size: cover;
+    width: 100%;
+    overflow: hidden;
+    padding: 100px 0;
+}
+.question-list-all {
+    width: 50%;
+    padding-right: 30px;
+    float: right;
+}
+
+#regiration_form fieldset:not(:first-of-type) {
+    display: none;
+    padding: 0;
+}
+.disable {
+    display: none !important;
+}
+.question-list-form {
+    overflow: hidden;
+    border: none;
+}
+.question-list_heading {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 600;
+    margin: 0 0 0.5em;
+}
+.question-list-value {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    position: relative;
+    width: 50%;
+    float: left;
+    padding: 0 20px 10px;
+}
+.question-list-line {
+    background: url(../../includes/images/bg-line.png) 98%  center no-repeat;
+}
+.question-list-value h4 {
+    font-size: 1em;
+    font-family: 'SFCompactDisplay Black';
+    color: #283054;
+}
+.question-list-value ul {
+    list-style: none;
+    margin: 0;
+}
+.question-list-value ul li {
+    /*background: url(../../includes/images/icon-img.png)  0 4px no-repeat;*/
+    padding-left: 29px;
+    margin-bottom: 9px;
+    font-family: 'SFCompactDisplay Bold';
+    line-height: 27px;
+    font-size: 0.9em;
+    position: relative;
+}
+.question-list-value ul li:before {
+    font: 19px/1 FontAwesome;
+    content: "\f138";
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    color: #283054;
+}
+
+.question-list-value .question-nganhphuhop,
+.question-list-value .question-nghetuonglai {
+    margin: 0;
+    padding: 0;
+}
+.question-list-value:last-child {
+    margin-bottom: 0;
+}
+.question-list-value span {
+    padding: 0;
+    display: block;
+    background-color: #F44336;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    text-align: center;
+    line-height: 30px;
+}
+.question-list-title {
+    padding: 5px 0;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+.question-list-share_fb {
+    text-align: center;
+}
+.question-list-share_fb_img,
+.question-list-share_fb_img img {
+    display: block;
+    box-shadow: 0 0 0 !important;
+}
+.question-list-share_fb_img {
+    padding-top: 10px;
+}
+.question-list-form #regiration_form {
+    overflow: hidden;
+}
+.question-list-progress {
+margin-top: 15px;
+}
+.question-list-progress .progress-bar {
+    background-color: #faa21a;
+    line-height: 27px;
+}
+.question-list-logo span,
+.question-list-title span {
+    display: inline-block;
+}
+.question-list-logo img,
+.question-list-title img {
+    width: 70%;
+}
+.question-list-title {
+    padding: 40px 0 20px;
+}
+.button_step .btn  {
+    font-family: 'SFCompactDisplay Bold';
+    font-size: 1.3em;
+    text-transform: uppercase;
+    padding: 9px 15px;
+    border: none;
+    background: rgb(25, 32, 65);
+}
+.question-list-share_fb a {
+    background-color: #283054;
+    border: none;
+    color: #00ffff !important;
+    padding: 9px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.question-list-share_fb a img {
+    box-shadow: 0 0 0 !important;
+}
+.question-list-share .question-list-share_fb a {
+    background: none;
+    padding: 0;
+}
+.question-list_title {
+    font-family: 'SFCompactDisplay Black';
+    color: #283054;
+    font-size: 1.7em;
+    margin-bottom: 20px;
+}
+.question-list-form .form-group .dapan {
+    font-family: 'SFCompactDisplay Bold';
+    color: #283054;
+    font-size: 1.7em;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+/*.question-list-form .form-group .dapan input {
+margin-right: 7px;
+}*/
+/* */
+.question-list-info {
+    overflow: hidden;
+    padding: 20px 0 0;
+    margin-bottom: 30px;
+    background: yellow;
+}
+
+.question-list-info .question-list-value h4 {
+    background: url(../../includes/images/icon-nganh.png) 0 center no-repeat;
+    background-size: 10%;
+    padding: 0 0px 0 35px;
+    overflow: hidden;
+    line-height: 40px;
+}
+.question-list-info .question-list-value.question-list-line h4 {
+    background: url(../../includes/images/icon-nghe1.png ) 0 center no-repeat;
+    background-size: 10%;
+}
+/*****************************************************/
+/* Responsive for web
+/*****************************************************/
+@media screen and  (max-width: 1200px) {
+    .question-list-info .question-list-value h4 {
+        padding-right: 45px;
+    }
+}
+@media screen and  (max-width: 900px) {
+    .question-list {
+        height: initial !important;
+    }
+    .question-list-all {
+        width: 80% !important;
+        margin: auto;
+        padding: 0 !important;
+        float: initial !important;
+    }
+
+
+}
+@media screen and  (max-width: 700px) {
+    .question-list-value {
+        width: 100%;
+        margin-bottom: 0;
+        padding: 10px 20px;
+    }
+    .question-list-line {
+        background: none;
+    }
+    .question-list-info .question-list-value h4 {
+        line-height: 50px;
+    }
+}
+@media screen and  (max-width: 500px) {
+    .question-list-value h4 {
+        font-size: 14px;
+    }
+}
+
+.page-id-78246.page-template-full-width .site-content.container {
+    padding: 0;
+}
+.page-id-78246.page-template-full-width #primary {
+    width: 100%;
+}
+/* */
+/* */
+.dapan {
+    overflow: hidden;
+}
+.dapan [type="radio"]:checked,
+.dapan [type="radio"]:not(:checked) {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 4px 3px 0 0;
+}
+.dapan [type="radio"]:checked + label,
+.dapan [type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 4px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #333;
+    font-size: 15px;
+    float: right;
+    width: calc(100% - 20px - 10px );
+}
+.question-notification {
+    text-align: center;
+    font-size: 2em;
+}

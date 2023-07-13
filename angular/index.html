@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- nhúng thư viện angular -->
+    <script src="./libs/angular.min.js"></script>
+    <title>AngularJS</title>
+</head>
+<!-- để khởi tạo chương trình dầu tiên chúng ta cần phải quy định 
+phạm vi sử dụng AngularJs (quy định bằng ng-app) -->
+
+<body ng-app="myApp">
+    <!-- vùng truy cập sử dụng controller -->
+    <!-- <div ng-controller="demo_controller">
+        <h1>{{test}}</h1>
+    </div>
+    <div ng-controller="thongTinSV">
+        <h1 style="color: red;">họ và tên: {{hoten}}</h1>
+        <h1 style="color: red;">lớp: {{lop}}</h1>
+        <h1 style="color: red;">chuyên ngành: {{chuyenNganh}}</h1>
+    </div> -->
+
+    <div ng-controller="infoController">
+
+    </div>
+</body>
+<!-- nhúng trực tiếp -->
+<!-- <script>
+    // khởi tạo module
+    var myApp = angular.module('myApp', []); // truyền vào 2 tham số: tên của ng-app, thành phần phụ thuộc
+    //  khởi tạo đăng kí cho controller
+    // tên_ng-app.controller('tên của controller', tên hàm )
+    myApp.controller('demo_controller', sayHello);
+
+    function sayHello($scope) { // bắt buộc phải có để render dữ liệu
+        //  khai báo biến
+        $scope.test = "xin chào cục cưng"
+    }
+    myApp.controller('thongTinSV', thongTinSV)
+
+    function thongTinSV($scope) {
+        $scope.hoten = 'Duong Van Dinh'
+        $scope.lop = '123'
+        $scope.chuyenNganh = 'lap trinh website'
+
+    }
+</script> -->
+<script src="js/app.js"></script>
+
+</html>

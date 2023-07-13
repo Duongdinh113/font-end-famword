@@ -1,0 +1,581 @@
+var dchcvn_json = rootFolder + '/assets-custom/dvhcvn.json';
+var chuyennganh_json = rootFolder + '/assets-custom/ds-chuyen-nganh.json';
+var listdvhcvn = [];
+var list_chuyen_nganh = [];
+var list_chuyen_nganh_hep = [];
+var list_co_so = [];
+var co_so_duoc_chon = "";
+var dia_chi_khac = "";
+var $ = jQuery;
+$.validator.methods.cccd = function (value, element) {
+    return /^[0-9]{9}$/.test(value) || /^[0-9]{12}$/.test(value);
+}
+$.validator.methods.checkYear = function (value, element) {
+    return /^20[0-9]{2}$/.test(value);
+}
+$.validator.methods.datepickerYear = function (value, element) {
+    //return /^20[0-9]{2}$/.test( value );
+    const inputDate = moment(value, 'DD/MM/YYYY');
+    //console.log(inputDate.year());
+    return /^20[0-9]{2}$/.test(inputDate.year()) || /^19[0-9]{2}$/.test(inputDate.year());
+}
+$.validator.methods.phonenumber = function (value, element) {
+    return /((09|03|07|08|05)+([0-9]{8})\b)/g.test(value);
+}
+$.validator.methods.futureDate = function (value, element) {
+    const inputDate = moment(value, 'DD/MM/YYYY');
+    const now = moment();
+    //console.log(value, inputDate.diff(now, 'days'));
+    return inputDate.diff(now, 'days') < 0;
+}
+$.validator.methods.notEqualMajor = function (value, element) {
+    if (value.length == 0) {
+        return true;
+    }
+    return value != $('#input_32_20').val();
+}
+$.validator.methods.notEqualPhoneNumber = function (value, element) {
+    if (value.length == 0) {
+        return true;
+    }
+    return value != $('#input_32_14').val();
+}
+$.validator.methods.whoRecceivePaper = function (value, element) {
+    return ($("#choice_32_31_1").is(":checked") || $("#choice_32_31_2").is(":checked"))
+}
+$.validator.methods.addressRecceivePaper = function (value, element) {
+    return ($("#choice_32_32_1").is(":checked") || $("#choice_32_32_2").is(":checked"))
+}
+$.validator.addMethod('filesize', function (value, element, param) {
+    if ($(element).attr('name') == 'input_44' && element.files.length == 0) {
+        return true;
+    }
+    return this.optional(element) || (element.files[0].size <= param * 1024 * 1024)
+}, 'Dung lượng file tối đa {0}mb (mẹo giảm dung lượng: Gửi ảnh lên zalo hoặc facebook, sau đó tải về lại điện thoại)');
+
+function previewFile(selector, imgOutput, defaultImage) {
+    var file = $(selector).get(0).files[0];
+    if (file) {
+        let extensionsArr = ['jpeg', 'jpg', 'gif', 'png', 'pdf'];
+        if (!extensionsArr.includes(file.name.split('.').pop())) {
+            $(imgOutput).attr("srcset", defaultImage);
+            return false;
+        }
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            $(imgOutput).attr("srcset", reader.result);
+        }
+
+        reader.readAsDataURL(file);
+    } else {
+        $(imgOutput).attr("srcset", defaultImage);
+    }
+}
+
+$(document).ready(function () {
+    // nhận dữ liệu nguồn từ url
+    const urlParams = new URLSearchParams(window.location.search);
+    const utm_source = urlParams.get('utm_source');
+    const utm_campaign = urlParams.get('utm_campaign');
+    const utm_medium = urlParams.get('utm_medium');
+    if (utm_source != null) {
+        $('#input_32_53').val(utm_source);
+    }
+
+    if (utm_campaign != null) {
+        $('#input_32_54').val(utm_campaign);
+    }
+
+    if (utm_medium != null) {
+        $('#input_32_55').val(utm_medium);
+    }
+    //$('#input_32_53')
+    // thay ảnh cmt mặt trước
+    $('#input_32_42').on('change', function () {
+        previewFile('#input_32_42', '#img_preview_32_42', `${rootFolder}/assets-custom/images/cccd-mt.png`);
+    });
+    $('#input_32_43').on('change', function () {
+        previewFile('#input_32_43', '#img_preview_32_43', `${rootFolder}/assets-custom/images/cccd-ms.png`);
+    });
+    $('#input_32_44').on('change', function () {
+        previewFile('#input_32_44', '#img_preview_32_44', `${rootFolder}/assets-custom/images/bang-tot-nghiep-thpt.png`);
+    });
+    // thêm ảnh preview
+    /*$('label[for="input_32_42"]').after(`
+      <div class="bang-tot-nghiep-preview">
+      <img id="img_preview_32_42" srcset="${rootFolder}/assets-custom/images/cccd-mt.png">
+      </div>
+    `);
+    $('label[for="input_32_43"]').after(`
+      <div class="bang-tot-nghiep-preview">
+      <img id="img_preview_32_43" srcset="${rootFolder}/assets-custom/images/cccd-ms.png">
+      </div>
+    `);
+    $('label[for="input_32_44"]').after(`
+      <div class="bang-tot-nghiep-preview">
+        <img id="img_preview_32_44" srcset="${rootFolder}/assets-custom/images/bang-tot-nghiep-thpt.png">
+      </div>
+    `);*/
+    // xóa sự kiện onchange của thẻ input - gform
+    $('#input_32_42').removeAttr('onchange');
+    $('#gform_32').validate({
+        groups: {
+            checkRecceiver: "input_31.1 input_31.2",
+            checkAddress: "input_32.1 input_32.2",
+        },
+        rules: {
+            input_1: {
+                required: true
+            },
+            input_2: {
+                required: true,
+                futureDate: true,
+                datepickerYear: true
+            },
+            input_4: {
+                required: true
+            },
+            input_6: {
+                required: true,
+                cccd: true
+            },
+            input_7: {
+                required: true,
+                futureDate: true,
+                datepickerYear: true
+            },
+            input_8: {
+                required: true
+            },
+            input_10: {
+                required: true
+            },
+            input_11: {
+                required: true
+            },
+            input_12: {
+                required: true
+            },
+            input_13: {
+                required: true
+            },
+            input_14: {
+                required: true,
+                phonenumber: true
+            },
+            input_15: {
+                //required: true,
+                email: true
+            },
+            input_16: {
+                required: true
+            },
+            input_17: {
+                required: true,
+                phonenumber: true,
+                notEqualPhoneNumber: true
+            },
+            input_20: {
+                required: true
+            },
+            input_22: {
+                //required: true,
+                notEqualMajor: true
+            },
+            input_35: {
+                required: true,
+                checkYear: true
+            },
+            input_25: {
+                required: true
+            },
+            input_27: {
+                required: true
+            },
+            input_28: {
+                required: true
+            },
+            input_29: {
+                required: true
+            },
+            "input_31.1": {
+                whoRecceivePaper: true
+            },
+            "input_31.2": {
+                whoRecceivePaper: true
+            },
+            "input_32.1": {
+                addressRecceivePaper: true
+            },
+            "input_32.2": {
+                addressRecceivePaper: true
+            },
+            cam_ket_xac_nhan: {
+                required: true
+            },
+            cam_ket_tai_chinh: {
+                required: true
+            },
+            input_42: {
+                required: true,
+                accept: "image/*",
+                filesize: 3
+            },
+            input_43: {
+                required: true,
+                accept: "image/*",
+                filesize: 3
+            },
+            input_44: {
+                accept: "image/*",
+                filesize: 3
+            }
+
+        },
+        messages: {
+            input_1: {
+                required: "Hãy nhập họ và tên"
+            },
+            input_2: {
+                required: "Hãy nhập ngày sinh",
+                futureDate: "Ngày sinh không thể là ngày tương lai",
+                datepickerYear: "Không đúng định dạng năm (20xx hoặc 19xx)"
+            },
+            input_4: {
+                required: "Hãy nhập dân tộc"
+            },
+            input_6: {
+                required: "Hãy nhập số CMND/CCCD",
+                cccd: "Không đúng định dạng CMND/CCCD"
+            },
+            input_7: {
+                required: "Hãy nhập ngày cấp CMND/CCCD",
+                futureDate: "Ngày cấp  không thể là ngày tương lai",
+                datepickerYear: "Không đúng định dạng năm (20xx hoặc 19xx)"
+            },
+            input_8: {
+                required: "Hãy nhập nơi cấp CMND/CCCD"
+            },
+            input_10: {
+                required: "Hãy chọn tỉnh/thành phố"
+            },
+            input_11: {
+                required: "Hãy chọn quận/huyện"
+            },
+            input_12: {
+                required: "Hãy chọn xã/phường/thị trấn"
+            },
+            input_13: {
+                required: "Hãy nhập địa chỉ"
+            },
+            input_14: {
+                required: "Hãy nhập số điện thoại thí sinh",
+                phonenumber: "Không đúng định dạng số điện thoại"
+            },
+            input_15: {
+                //required: "Hãy nhập email thí sinh",
+                email: "Không đúng định dạng email"
+            },
+            input_16: {
+                required: "Hãy nhập họ và tên phụ huynh/người bảo trợ"
+            },
+            input_17: {
+                required: "Hãy nhập số điện thoại phụ huynh/người bảo trợ",
+                phonenumber: "Không đúng định dạng số điện thoại",
+                notEqualPhoneNumber: "Số điện thoại của phụ huynh và thí sinh không được giống nhau"
+            },
+            input_20: {
+                required: "Hãy chọn chuyên ngành thứ nhất"
+            },
+            input_22: {
+                //required: "Hãy chọn chuyên ngành thứ hai",
+                notEqualMajor: "Chuyên ngành thứ hai cần khác chuyên ngành thứ nhất"
+            },
+            input_35: {
+                required: "Hãy nhập năm tốt nghiệp THPT hoặc tương đương",
+                checkYear: "Không đúng định dạng năm"
+            },
+            input_25: {
+                required: "Hãy nhập trường tốt nghiệp THPT hoặc tương đương"
+            },
+            input_27: {
+                required: "Hãy chọn tỉnh/thành phố"
+            },
+            input_28: {
+                required: "Hãy chọn quận/huyện"
+            },
+            input_29: {
+                required: "Hãy chọn xã/phường/thị trấn"
+            },
+            "input_31.1": {
+                whoRecceivePaper: "Hãy chọn người nhận giấy báo kết quả xét tuyển"
+            },
+            "input_31.2": {
+                whoRecceivePaper: "Hãy chọn người nhận giấy báo kết quả xét tuyển"
+            },
+            "input_32.1": {
+                addressRecceivePaper: "Hãy chọn địa chỉ nhận giấy báo kết quả xét tuyển"
+            },
+            "input_32.2": {
+                addressRecceivePaper: "Hãy chọn địa chỉ nhận giấy báo kết quả xét tuyển"
+            },
+            cam_ket_xac_nhan: {
+                required: "Bạn chưa đồng ý với cam kết xác nhận thông tin"
+            },
+            cam_ket_tai_chinh: {
+                required: "Bạn chưa đồng ý với cam kết tài chính"
+            },
+            input_42: {
+                required: "Hãy chọn ảnh CMT/CCCD mặt trước",
+                accept: "File không đúng định dạng ảnh (.jpg, .jpeg, .png,...)"
+            },
+            input_43: {
+                required: "Hãy chọn ảnh CMT/CCCD mặt sau",
+                accept: "File không đúng định dạng ảnh (.jpg, .jpeg, .png,...)"
+            },
+            input_44: {
+                accept: "File không đúng định dạng ảnh (.jpg, .jpeg, .png,...)"
+            }
+        },
+        errorPlacement: function (error, element) {
+            if (element.attr('name') == 'input_31.2' || element.attr('name') == 'input_31.1') {
+                $('#input_32_31').append(error);
+            } else if (element.attr('name') == 'input_32.2' || element.attr('name') == 'input_32.1') {
+                $('#input_32_32').append(error);
+            } else if (element.attr('name') == 'cam_ket_xac_nhan') {
+                $('#input_32_39').append(error);
+            } else if (element.attr('name') == 'cam_ket_tai_chinh') {
+                $('#input_32_41').append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    $('#gform_submit_button_32').on('click', function () {
+        if ($('#gform_32').valid()) {
+            $('form#gform_32').trigger('submit');
+            $('#loading_panel').css('display', 'block');
+        }
+    })
+    $('#choice_32_31_1').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#choice_32_31_2').prop('checked', false);
+        }
+    });
+    $('#choice_32_31_2').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#choice_32_31_1').prop('checked', false);
+        }
+    });
+    // set địa chỉ khác
+    $('#choice_32_32_1').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#choice_32_32_2').prop('checked', false);
+            xoaDiaChiKhac();
+        }
+    });
+    $('#choice_32_32_2').on('change', function () {
+        if ($('#choice_32_32_2').is(':checked')) {
+            // $('#choice_32_32_1').prop('checked', false);
+
+            if (dia_chi_khac == undefined || dia_chi_khac.length == 0) {
+                // tuannda3 add input dia chi khac & span save
+                // let value  = prompt("Nhập địa chỉ nhận giấy báo kết quả xét tuyển:", dia_chi_khac);
+                $('#choice_32_32_1').prop('checked', false);
+                $('#label_32_32_2').html(`Khác <input 
+            id='inputDiaChiKhac' 
+            value='${dia_chi_khac}' 
+            placeholder='Địa chỉ khác' 
+            style="border: 1px solid #ccc;padding: 1px 5px;"
+            /> <span onclick="luuDiaChiKhac()" title="Lưu địa chỉ khác" style="display: inline-block;
+          border: 1px solid #2e3192;
+          background: #fff;
+          font-size: 12px;
+          padding: 2px 7px;
+          vertical-align: top;
+          font-weight: bold;
+          color: #2e3192;
+          cursor: pointer;">Lưu</span> <span onclick="xoaDiaChiKhac()" title="Xóa địa chỉ khác" style="display: inline-block;
+          border: 1px solid #ff0000;
+          background: #fff;
+          font-size: 12px;
+          padding: 2px 7px;
+          vertical-align: top;
+          font-weight: bold;
+          color: #ff0000;
+          cursor: pointer;">x</span>`);
+
+                // if(value == null){
+                //   dia_chi_khac = "";
+                // }else{
+                //   dia_chi_khac = value;
+                // }
+                // end tuannda3
+            }
+        }
+    });
+
+    // $("#input_32_2").flatpickr(
+    //     {
+    //         onReady: function () {
+    //             this.jumpToDate("01/06/2005")
+    //         },
+    //         disableMobile: true,
+    //         dateFormat: "d/m/Y",
+    //         locale: "vn",
+    //         allowInput: true
+    //     }
+    // );
+    $("#input_32_2").css('width', '100%');
+    // $("#input_32_7").flatpickr(
+    //     {
+    //         onReady: function () {
+    //             this.jumpToDate("01/06/2020")
+    //         },
+    //         disableMobile: true,
+    //         dateFormat: "d/m/Y",
+    //         locale: "vn",
+    //         allowInput: true
+    //     }
+    // );
+
+    // setup năm tốt nghiệp
+    const namHienTai = moment();
+    let contentNam = "";
+    for (let i = namHienTai.year(); i >= namHienTai.year() - 12; i--) {
+        contentNam += `<option value="${i}">${i}</option>`;
+    }
+
+    $('#input_32_35').html(contentNam);
+    $("#input_32_7").css('width', '100%');
+    $.getJSON(dchcvn_json, function (response) {
+        listdvhcvn = response.data;
+        $('#input_32_10').html(optionProvinces());
+        $('#input_32_27').html(optionProvinces());
+    });
+
+    $.getJSON(chuyennganh_json, function (response) {
+        /*list_chuyen_nganh = response.chuyennganh;
+        list_chuyen_nganh_hep = response.chuyennganhhep;
+        $('#input_32_20').html(getMainMajor());
+        $('#input_32_22').html(getMainMajor());*/
+        list_chuyen_nganh = response.chuyennganh;
+        list_co_so = response.danhsachcoso;
+        $('#input_32_20').html(getMainMajor());
+        $('#input_32_22').html(getMainMajor());
+    });
+    // thay đổi cơ sở
+    $('#input_32_19').on('change', function () {
+        $('#input_32_20').html(getMainMajor());
+        $('#input_32_22').html(getMainMajor());
+        $('#input_32_21').html(getLevel2Major(undefined));
+        $('#input_32_23').html(getLevel2Major(undefined));
+
+    });
+    // setup địa chỉ cho phần hộ khẩu thường trú
+    $('#input_32_10').on('change', function () {
+        $('#input_32_11').html(optionDistricts($(this).val()));
+        $('#input_32_12').val("");
+    });
+    $('#input_32_11').on('change', function () {
+        $('#input_32_12').html(optionWards($('#input_32_10').val(), $(this).val()));
+    });
+    // setup địa chỉ cho phần nơi tốt nghiệp
+    $('#input_32_27').on('change', function () {
+        $('#input_32_28').html(optionDistricts($(this).val()));
+        $('#input_32_29').val("");
+    });
+    $('#input_32_28').on('change', function () {
+        $('#input_32_29').html(optionWards($('#input_32_27').val(), $(this).val()));
+    });
+    // setup chuyên ngành thứ nhất
+    $('#input_32_20').on('change', function () {
+        $('#input_32_21').html(getLevel2Major($(this).val()));
+    });
+
+    // setup chuyên ngành thứ 2
+    $('#input_32_22').on('change', function () {
+        $('#input_32_23').html(getLevel2Major($(this).val()));
+    });
+
+    //$('form#gform_32').submit(function(){
+    //	debugger;
+    //})
+
+});
+
+function xoaDiaChiKhac() {
+    dia_chi_khac = "";
+    $('#label_32_32_2').html("Khác");
+}
+
+// tuannda3 add input dia chi khac & save
+function luuDiaChiKhac() {
+    inputDiaChiKhac = $('#inputDiaChiKhac');
+    dia_chi_khac = inputDiaChiKhac.val();
+    $('#choice_32_32_2').val(dia_chi_khac);
+    $('#choice_32_32_2').prop('checked', true);
+    $('#label_32_32_2').html(`Khác (${dia_chi_khac}) <span onclick="xoaDiaChiKhac()" title="Xóa địa chỉ khác" style="display: inline-block;
+    border: 1px solid #ff0000;
+    background: #fff;
+    font-size: 12px;
+    padding: 2px 7px;
+    vertical-align: top;
+    font-weight: bold;
+    color: #ff0000;
+    cursor: pointer;">x</span>`);
+}
+
+// end tuannda3
+
+function getFirstLetters(str) {
+    const firstLetters = str
+        .split(' ')
+        .map(word => word[0])
+        .join('');
+
+    return firstLetters;
+}
+
+function getMainMajor() {
+    let obj_co_so = list_co_so.find(item => getFirstLetters(item.coso).toLowerCase() == $('#input_32_19').val().toLowerCase());
+    list_chuyen_nganh_hep = obj_co_so.chuyennganhhep;
+    let lstMainMajor = `<option value="">Chuyên ngành</option>` + list_chuyen_nganh_hep.map(item => {
+        return `<option value="${item.name}">${item.name}</option>`;
+    }).join('');
+    return lstMainMajor;
+}
+
+function getLevel2Major(majorName) {
+    let selectedMajor = list_chuyen_nganh_hep.find(item => item.name === majorName);
+    if (selectedMajor != undefined) {
+        let mainMajor = list_chuyen_nganh.find(item => item.name = selectedMajor.level1);
+        return `<option value="${mainMajor.name}">${mainMajor.name}</option>`;
+    }
+    return `<option value="">Ngành</option>`;
+}
+
+function optionProvinces() {
+    let listProvince = `<option  value="">Chọn tỉnh/thành phố</option>` + listdvhcvn.map(item => {
+        return `<option value="${item.name}">${item.name}</option>`;
+    }).join('');
+    return listProvince;
+}
+
+function optionDistricts(provinceName) {
+    let listDistrict = `<option value="">Chọn quận/huyện</option>`;
+    let selectedProvince = listdvhcvn.find(item => item.name === provinceName);
+    listDistrict += selectedProvince.level2s.map(district => {
+        return `<option value="${district.name}">${district.name}</option>`
+    }).join('');
+    return listDistrict;
+}
+
+function optionWards(provinceName, districtName) {
+    let selectedProvince = listdvhcvn.find(item => item.name === provinceName);
+    let selectedDistrict = selectedProvince.level2s.find(district => district.name === districtName);
+    let listWard = `<option value="">Chọn phường/xã</option>`;
+    listWard += selectedDistrict.level3s.map(ward => `<option value="${ward.name}">${ward.name}</option>`).join('');
+    return listWard;
+}
