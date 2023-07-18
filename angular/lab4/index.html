@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../libs/angular.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body ng-app="myApp">
+    <h2>bài 1</h2>
+
+    <div ng-controller="bai1">
+        <img src="{{photo}}" alt="">
+        <ul>
+            <li>Họ và tên: {{fullname}}</li>
+            <li>Ngày sinh: {{birthday}}</li>
+            <li>Giới tính: {{gender}}</li>
+            <li>Điển trung bình: {{mark}}</li>
+        </ul>
+    </div>
+    <h2>bài 2</h2>
+    <div ng-controller="bai2">
+        <ul>
+            <img src="{{student.photo}}" alt="">
+            <li>Họ và tên: {{student.fullname}}</li>
+            <li>Ngày sinh: {{student.birthday}}</li>
+            <li>Giới tính: {{student.gender}}</li>
+            <li>Điển trung bình :{{student.mark}}</li>
+        </ul>
+    </div>
+    <h2>bài 3</h2>
+    <div ng-controller="bai3">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Hình</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày Sinh</th>
+                    <th>Giới tính</th>
+                    <th>Điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tt in students">
+                    <td><img src="{{tt.photo}}" alt=""></td>
+                    <td>{{tt.fullname}}</td>
+                    <td>{{tt.birthday}}</td>
+                    <td>{{tt.gender}}</td>
+                    <td>{{tt.mark}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-controller="bai4">
+        <form>
+            <label for="">chiều dài</label><br>
+            <input type="text" ng-model="length" name="" id=""><br>
+            <label for="">chiều rộng</label><br>
+            <input type="text" ng-model="width" name="" id=""><br>
+            <label for="">diện tích</label><br>
+            <input type="text" ng-model="acreage" name="" id=""><br>
+            <label for="">chu vi</label><br>
+            <input type="text" ng-model="perimeter" name="" id=""><br>
+            <button ng-click="calculate()">creata</button>
+        </form>
+    </div>
+    <h2>bài 5</h2>
+    <div ng-controller="bai5">
+        <form>
+            <label for="">họ và tên</label><br>
+            <input type="text" ng-model="student.fullname" name="" id=""><br>
+            <label for="">ngày sinh</label><br>
+            <input type="text" ng-model="student.birthday" id=""><br>
+            <label for="">giới tính</label><br>
+            <select ng-model="student.gender">
+                <option value="">Nam</option>
+                <option value="">Nữ</option>
+            </select>
+            <label for="">điểm</label><br>
+            <input type="text" ng-model="student.mark" id=""><br>
+            <label for="">học lực</label>
+            <input type="text" ng-model="student.academic" id=""><br>
+            <button ng-click="save()">creata</button>
+        </form>
+    </div>
+</body>
+<script src="lab4.js"></script>
+
+</html>

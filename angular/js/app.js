@@ -81,6 +81,9 @@ myApp.controller('dangNhap', function($scope) {
             alert('sai tài khoản hoặc mật khẩu');
         }
     }
+
+})
+myApp.controller('tang', function($scope) {
     $scope.bao = function($count) {
         if (Number($count) > 3) {
             alert('không được quá 3');
