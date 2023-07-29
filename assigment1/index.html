@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Quản lí bán vé máy bay</title>
+
+</head>
+
+<body ng-app="myRoute">
+    <header class="pt-5">
+        <!-- banner -->
+        <div class="mt-5">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner" style="height: 500px;">
+                    <div class="carousel-item active">
+                        <img class="object-fit-fill  img-fluid w-100" src="image/gradient-airline-service-facebook-template_23-2149620566.jpg" class="d-block w-100">
+                    </div>
+                    <div class="carousel-item ">
+                        <img class="object-fit-fill  img-fluid w-100" src="image/gradient-airline-service-facebook-template_23-2149620566.jpg" class="d-block w-100">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="object-fit-fill  img-fluid w-100" src="image/gradient-airline-service-facebook-template_23-2149620566.jpg" class="d-block w-100">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+            </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+                <ul class="navbar-nav align-items-center ">
+                    <img style="width: 100px; height: 90px;" class="bg-body-secondary " src="https://fontmeme.com/images/Vietnam-Airlines-Logo.jpg" alt="">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#!/">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#!/dat-ve">Đặt vé</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#!/lien-he">Liên hệ</a>
+                    </li>
+
+                </ul>
+                <div class="navbar-nav ">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="">Đăng kí</a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Định nghĩa khu vực mà view sẽ được render ra -->
+        <div ng-view></div>
+    </main>
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>About Us</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor libero ut nunc mattis, nec aliquam massa suscipit. Fusce hendrerit euismod dui, nec interdum lectus ultricies ac.</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>Quick Links</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4>Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt-fill"></i> 123 Street, City, Country</li>
+                        <li><i class="bi bi-envelope-fill"></i> example@example.com</li>
+                        <li><i class="bi bi-phone-fill"></i> +123 456 7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p>&copy; 2023 Your Company. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="controllers/TrangChuController.js"></script>
+<script src="controllers/GioiThieuController.js"></script>
+<script src="controllers/LienHeController.js"></script>
+<script>
+    var myRoute = angular.module('myRoute', ['ngRoute']);
+    // ngRoute: cung cấp các tính năng tuyến tính (routing) 
+    // để quản lý việc điều hướng
+
+    myRoute.config(function($routeProvider) {
+        // config: cấu hình các tham số trước khi ứng dụng được chạy
+        // $routeProvider: phải để đúng tên vì nó đã được định nghĩa mặc định 
+        // sử dụng trong angular
+
+        $routeProvider
+            .when(
+                '/', // Tên route
+                {
+                    templateUrl: 'views/trangchu.html', // Đường dẫn đến view
+                    controller: TrangChuController // Tên controller cần map tới view
+                }
+            )
+
+        .when(
+                '/dat-ve', // Tên route
+                {
+                    templateUrl: 'views/datve.html', // Đường dẫn đến view
+                    controller: GioiThieuController // Tên controller cần map tới view
+                }
+            )
+            .when(
+                '/lien-he', // Tên route
+                {
+                    templateUrl: 'views/lienhe.html', // Đường dẫn đến view
+                    controller: LienHeController
+                }
+            )
+    });
+</script>
+
+</html>

@@ -1,0 +1,3 @@
+window.LienHeController = function($scope) {
+
+}
