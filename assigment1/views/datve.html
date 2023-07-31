@@ -2,14 +2,30 @@
     <h1>{{datve}}</h1>
 </div>
 <div class="container mt-5">
+    <div class="d-grid w-25 gap-2 ">
+        <label for="">Tiêu đề</label>
+        <input type="text" ng-model="inputValue.title" name="" id="">
+        <p ng-if="kiemTraDuLieu.title == true" style="color: red;">Vui lòng nhập tiêu đề</p>
+        <label for="">Tác giả</label>
+        <input type="text" ng-model="inputValue.author" name="" id="">
+        <p ng-if="kiemTraDuLieu.author == true" style="color: red;">Vui lòng nhập tác giả</p>
+        <button class="bg-success" ng-click="onSubmit()">them</button>
+        <button class="bg-success" ng-click="update(inputValue.id)">sửa</button>
+    </div>
 
     <table class="table">
+
+
         <thead>
             <tr>
 
                 <th scope="col">ID</th>
+
                 <th scope="col">Tiêu đề</th>
+
                 <th scope="col">tác giả</th>
+                <th>action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -17,10 +33,15 @@
                 <td>{{item.id}}</td>
                 <td>{{item.title}}</td>
                 <td>{{item.author}}</td>
-
+                <td>
+                    <button ng-click="remove(item.id)">xóa</button>
+                    <button ng-click="edit(item.id)">sửa</button>
+                </td>
             </tr>
-
         </tbody>
+
+        </form>
+
     </table>
 
     <div class="shadow-lg p-3 mb-5 bg-body rounded row align-items-center">
